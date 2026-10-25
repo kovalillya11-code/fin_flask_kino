@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000000"/>
+      <stop offset="1" stop-color="#0a1a26"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b5180" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0b5180" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="seat" width="34" height="30" patternUnits="userSpaceOnUse">
+      <rect x="4" y="4" width="26" height="20" rx="6" fill="#0c6eaa" opacity="0.8"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="150" y="70" width="500" height="18" rx="6" fill="url(#screen)"/>
+  <path d="M150 92 Q400 150 650 92" stroke="#0b5180" stroke-width="2" fill="none" opacity="0.5"/>
+  <rect x="100" y="200" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="240" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="280" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="320" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="360" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="400" width="600" height="22" fill="url(#seat)"/>
+  <rect x="100" y="440" width="600" height="22" fill="url(#seat)"/>
+  <rect x="0" y="500" width="800" height="100" fill="#050505"/>
+</svg>

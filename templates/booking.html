@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Квитки{% endblock %}
+
+{% block content %}
+<section class="booking">
+  <h1 class="gallery-title">Бронювання квитків</h1>
+
+  {% if success %}
+    <div class="errors">
+      <p>Дякуємо, {{ success.name }}! Ви забронювали місця {{ success.seats }} на «{{ success.movie }}» {{ success.date }} о {{ success.time }}. Сума: {{ success.total }} грн.</p>
+    </div>
+  {% endif %}
+
+  {% if errors %}
+    <div class="errors">
+      {% for e in errors %}<p>{{ e }}</p>{% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('booking') }}" id="booking-form" class="booking-form">
+    <div class="session-fields">
+      <label>Фільм
+        <select name="movie">
+          <option value="">— оберіть фільм —</option>
+          {% for m in movies %}
+          <option value="{{ m['id'] }}" {% if m['id'] == movie_id %}selected{% endif %}>{{ m['title'] }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Дата
+        <input type="date" name="date" value="{{ date }}" required>
+      </label>
+      <label>Час сеансу
+        <select name="time">
+          {% for t in ['10:00', '13:30', '17:00', '20:30'] %}
+          <option value="{{ t }}" {% if t == time %}selected{% endif %}>{{ t }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div> 
+
+    <div class="screen-wrap">
+      <div class="screen">ЕКРАН</div>
+    </div>
+
+    <div class="seat-map" id="seat-map" data-taken='{{ taken|tojson }}'></div>
+
+    <div class="legend">
+      <span><i class="seat free"></i> Вільне</span>
+      <span><i class="seat selected"></i> Обране</span>
+      <span><i class="seat taken"></i> Зайняте</span>
+      <span>Стандарт 180 грн · Комфорт 250 грн · VIP 350 грн</span>
+    </div>
+
+    <div class="contact-fields">
+      <label>Ваше ім'я
+        <input type="text" name="name" required>
+      </label>
+      <label>Телефон
+        <input type="tel" name="phone" required>
+      </label>
+    </div>
+
+    <input type="hidden" name="seats" id="seats-input">
+    <input type="hidden" name="total" id="total-input">
+
+    <div class="summary-bar">
+      <span>Обрано: <strong id="count">0</strong> місць | Сума: <strong id="sum">0</strong> грн</span>
+      <button type="submit" id="buy-btn" disabled>Купити квитки</button>
+    </div>
+  </form>
+</section>
+
+<script src="../static/js/booking.js" defer></script>
+{% endblock %}

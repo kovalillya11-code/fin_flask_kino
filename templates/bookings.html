@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Бронювання{% endblock %}
+
+{% block content %}
+<h1 class="gallery-title">Заброньовані квитки</h1>
+
+<p class="message">
+  Бронювань: {{ bookings|length }} · квитків: {{ tickets }} · сума: {{ total_sum }} грн
+</p>
+<p class="message small-note">Місця вказано як ряд-місце (наприклад, 5-12 означає ряд 5, місце 12).</p>
+
+{% if bookings %}
+<div class="table-wrap">
+  <table class="bookings-table">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Фільм</th>
+        <th>Дата</th>
+        <th>Час</th>
+        <th>Місця</th>
+        <th>Ім'я</th>
+        <th>Телефон</th>
+        <th>Сума</th>
+        <th>Створено</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td>{{ b['id'] }}</td>
+        <td>{{ b['movie_title'] or '—' }}</td>
+        <td>{{ b['date'] }}</td>
+        <td>{{ b['time'] }}</td>
+        <td>{{ b['seats'] }}</td>
+        <td>{{ b['name'] }}</td>
+        <td>{{ b['phone'] }}</td>
+        <td>{{ b['total'] }} грн</td>
+        <td>{{ b['created_at'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="message">Бронювань поки немає.</p>
+{% endif %}
+{% endblock %}

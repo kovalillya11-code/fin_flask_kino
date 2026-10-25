@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Редагувати фільм{% endblock %}
+
+{% block content %}
+<h1>Редагувати фільм</h1>
+
+{% if errors %}
+<div class="errors">
+  <ul>
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<form method="post" class="add-form" action="{{ url_for('edit_movie', movie_id=movie['id']) }}">
+  <label>Назва
+    <input type="text" name="title" value="{{ form.title or '' }}" required>
+  </label>
+
+  <label>Жанр
+    <input type="text" name="genre" value="{{ form.genre or '' }}">
+  </label>
+
+  <label>Тривалість (хв)
+    <input type="number" name="duration" min="1" step="1" value="{{ form.duration or '' }}">
+  </label>
+
+  <label>Опис
+    <textarea name="description">{{ form.description or '' }}</textarea>
+  </label>
+
+  <label>Ціна квитка (від 180 грн)
+    <input type="number" name="price" min="0.01" step="0.01" value="{{ form.price or '' }}" required>
+  </label>
+
+  <label>Посилання на зображення (URL)
+    <input type="url" name="image_url" placeholder="https://..." value="{{ form.image_url or '' }}">
+  </label>
+
+  <button type="submit">Зберегти зміни</button>
+</form>
+
+<p><a href="{{ url_for('movies') }}">Назад до списку фільмів</a></p>
+{% endblock %}

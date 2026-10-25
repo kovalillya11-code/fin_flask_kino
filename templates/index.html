@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+<section class="banner">
+  <h1>Ласкаво просимо до нашого кінотеатру</h1>
+  <p>Сучасні зали, чистий звук і зручні крісла для кожного перегляду.</p>
+  <div class="hero-actions">
+    <a class="btn-link" href="{{ url_for('booking') }}">Купити квитки</a>
+    <a class="btn-link" href="{{ url_for('movies') }}">Афіша</a>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <span class="counter" data-target="{{ stats.movies }}">0</span>
+    <small>фільмів в афіші</small>
+  </div>
+  <div class="stat">
+    <span class="counter" data-target="{{ stats.halls }}">0</span>
+    <small>сучасних залів</small>
+  </div>
+  <div class="stat">
+    <span class="counter" data-target="{{ stats.tickets }}">0</span>
+    <small>квитків заброньовано</small>
+  </div>
+</section>
+
+{% if featured %}
+<h2 class="section-title">Зараз у кіно</h2>
+<div class="movie-list">
+  {% for movie in featured %}
+  {% set img = movie['image'] or '' %}
+  <article class="movie-card">
+    <img src="{% if img.startswith('http://') or img.startswith('https://') %}{{ img }}{% else %}{{ url_for('static', filename='image/' ~ img) }}{% endif %}" alt="Постер: {{ movie['title'] }}">
+    <h2>{{ movie['title'] }}</h2>
+    <p>Жанр: {{ movie['genre'] or 'не вказано' }}</p>
+    <p class="price">Квиток від {{ movie['price'] }} грн</p>
+    <div class="card-actions">
+      <a class="btn-link" href="{{ url_for('booking') }}">Обрати місця</a>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}
+
+<h2 class="section-title">Як купити квиток</h2>
+<div class="steps">
+  <div class="step">
+    <span>1</span>
+    <h3>Оберіть фільм</h3>
+    <p>Перегляньте афішу і виберіть зручний сеанс.</p>
+  </div>
+  <div class="step">
+    <span>2</span>
+    <h3>Виберіть місця</h3>
+    <p>Позначте місця на схемі залу. Вільні місця видно одразу.</p>
+  </div>
+  <div class="step">
+    <span>3</span>
+    <h3>Отримайте підтвердження</h3>
+    <p>Вкажіть ім'я та телефон, і бронювання буде збережено.</p>
+  </div>
+</div>
+
+<h2 class="section-title">Акції</h2>
+<div class="promo-grid">
+  <div class="promo promo-left">
+    <h3>Ранковий сеанс −20%</h3>
+    <p>Знижка на всі сеанси до 12:00 у будні дні.</p>
+    <a class="btn-link" href="{{ url_for('booking') }}">Обрати сеанс</a>
+  </div>
+  <div class="promo">
+    <h3>Студентська середа</h3>
+    <p>У середу квиток для студентів зі знижкою 30%.</p>
+    <a class="btn-link" href="{{ url_for('booking') }}">Купити квиток</a>
+  </div>
+</div>
+
+<h2 class="section-title">Чому обирають нас</h2>
+<div class="features-grid">
+  <div class="feature-card">
+    <h3>Комфортні зали</h3>
+    <p>Зручні крісла, чистий звук і ідеальний огляд з будь-якого місця.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Онлайн-бронювання</h3>
+    <p>Обирайте місця на схемі залу і купуйте квитки за кілька кліків.</p>
+  </div>
+  <div class="feature-card">
+    <h3>Снеки та напої</h3>
+    <p>Попкорн, напої та закуски у фойє просто перед сеансом.</p>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>Готові до перегляду?</h2>
+  <p>Оберіть фільм і сеанс, а місця зарезервуйте за кілька хвилин.</p>
+  <a class="btn-link" href="{{ url_for('booking') }}">Перейти до квитків</a>
+</div>
+{% endblock %}

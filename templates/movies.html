@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Фільми{% endblock %}
+
+{% block content %}
+<h1>Фільми</h1>
+
+<form method="get" class="filter-form">
+  <input type="text" name="q" placeholder="Назва фільму" value="{{ q }}">
+  <input type="number" name="max_price" placeholder="Максимальна ціна" min="0" step="any" value="{{ max_price }}">
+  <button type="submit">Знайти</button>
+</form>
+
+{% if movies %}
+<div class="movie-list">
+  {% for movie in movies %}
+  {% set img = movie['image'] or '' %}
+  <article class="movie-card">
+    <div class="poster{% if movie['description'] %} poster-clickable{% endif %}">
+      <img src="{% if img.startswith('http://') or img.startswith('https://') %}{{ img }}{% else %}{{ url_for('static', filename='image/' ~ img) }}{% endif %}" alt="Постер: {{ movie['title'] }}">
+      {% if movie['description'] %}
+      <div class="movie-popup">
+        <h4>{{ movie["title"] }}</h4>
+        <p>{{ movie["description"]|truncate(140) }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <h2>{{ movie["title"] }}</h2>
+    <p>Жанр: {{ movie["genre"] or "не вказано" }}</p>
+    <p>Тривалість: {{ movie["duration"] or "—" }} хв</p>
+    <p class="price">Ціна квитка: {{ movie["price"] }} грн</p>
+
+    <div class="card-actions">
+      <a class="btn-link" href="{{ url_for('edit_movie', movie_id=movie['id']) }}">Редагувати</a>
+      <form method="post" action="{{ url_for('delete_movie', movie_id=movie['id']) }}" class="delete-form">
+        <button type="submit" class="btn-danger">Видалити</button>
+      </form>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% elif searched %}
+<p class="message">Нічого не знайдено.</p>
+{% else %}
+<p class="message">Фільмів поки немає.</p>
+{% endif %}
+{% endblock %}

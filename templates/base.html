@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Кінотеатр{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='../static/image/logo_transparent.png') }}">
+</head>
+<script>
+  if (localStorage.getItem('noAnim') === '1') {
+    document.documentElement.classList.add('no-anim');
+  }
+</script>
+<body>
+  <header id="header">
+    <div class="container">
+
+      <div class="logo-wrap">
+        <div class="logo-group">
+          <img class="logo-img" src="{{ url_for('static', filename='../static/image/logo_transparent.png') }}" alt="Логотип кінотеатру">
+          <button class="logo" id="logo" type="button">C.I.N.E.M.A</button>
+        </div>
+
+        <div class="cinema-popup" id="cinema-popup">
+          <p><span>C</span> – Cine 🍿 </p>
+          <p><span>I</span> – Infinity ♾️ </p>
+          <p><span>N</span> – Nexus 🌐 </p>
+          <p><span>E</span> – Emotion 🎭 </p>
+          <p><span>M</span> – Movie 🎞️ </p>
+          <p><span>A</span> – Arena 🏛️ </p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        {% if prev_page %}
+          <a class="btn-link" href="{{ url_for(prev_page[0]) }}"> {{ prev_page[1] }}</a>
+        {% endif %}
+        {% if next_page %}
+          <a class="btn-link" href="{{ url_for(next_page[0]) }}">{{ next_page[1] }} </a>
+        {% endif %}
+
+        <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <nav id="nav">
+        <ul>
+          {% for endpoint, title in nav_pages %}
+          <li><a href="{{ url_for(endpoint) }}">{{ title }}</a></li>
+          {% endfor %}
+          <li><a href="{{ url_for('settings') }}">Налаштування</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4>Адреса</h4>
+        <p>вул. Трайова 1, місто Івано-Франківськ</p>
+      </div>
+      <div>
+        <h4>Години роботи</h4>
+        <p>Пн–Нд: 8:00 – 23:00</p>
+      </div>
+      <div>
+        <h4>Контакти</h4>
+        <p>+380 (93) 729-21-53<br>IFtry@cinema.ua</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

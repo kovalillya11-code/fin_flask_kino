@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Галерея{% endblock %}
+
+{% block content %}
+<section class="gallery-page">
+  <h1 class="gallery-title">Галерея кінотеатру</h1>
+  <p class="gallery-lead">Погляньте на наші зали, фойє та атмосферу, в якій проходять перегляди.</p>
+
+  <div class="gallery-grid">
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/hall1.svg') }}" alt="Зал кінотеатру з рядами крісел">
+      <figcaption>Зал з комфортними кріслами</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/lobby.svg') }}" alt="Фойє кінотеатру з касами">
+      <figcaption>Фойє та каси</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/bar.svg') }}" alt="Попкорн і напій з бару">
+      <figcaption>Бар зі снеками та напоями</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/reel.svg') }}" alt="Кіноплівка">
+      <figcaption>Атмосфера кіно</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/imax.svg') }}" alt="Широкий зал IMAX">
+      <figcaption>Зал IMAX з широким екраном</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/vip.svg') }}" alt="VIP-зал з м'якими диванами">
+      <figcaption>VIP-зал з диванами</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/entrance.svg') }}" alt="Вхід до кінотеатру">
+      <figcaption>Вхід до кінотеатру</figcaption>
+    </figure>
+    <figure class="gallery-card">
+      <img src="{{ url_for('static', filename='image/kids.svg') }}" alt="Дитяча зона">
+      <figcaption>Дитяча зона</figcaption>
+    </figure>
+  </div>
+</section>
+{% endblock %}

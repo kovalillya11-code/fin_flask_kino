@@ -1,0 +1,1180 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000;
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: #0c6eaa #000;
+}
+
+body {
+  margin: 0;
+  padding-top: 68px;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+a {
+  color: #0c6eaa;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0b5180;
+  border-radius: 6px;
+  border: 2px solid #000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0a466b;
+}
+
+/* ==========================================================================
+   1. Поля форм кнопки
+   ========================================================================== */
+
+select,
+input,
+textarea {
+  background: #0d0d0d;
+  color: #ffffff;
+  border: 1px solid #1c1c1c;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+select option {
+  background: #0d0d0d;
+  color: #ffffff;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+button {
+  background: linear-gradient(135deg, #0b5180 0%, #053150 100%);
+  color: #ffffff;
+  border: 1px solid #0b5180;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0c6eaa 0%, #0b5180 100%);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.btn-link {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid #0b5180;
+  border-radius: 4px;
+  color: #0c6eaa;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0d0d0d 0%, #000 100%);
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.btn-link:hover {
+  background: linear-gradient(135deg, #0b5180 0%, #0c6eaa 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #5c0f1c 0%, #000 100%);
+  border: 1px solid #a4243b;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #a4243b 0%, #5c0f1c 100%);
+}
+
+.delete-form {
+  margin: 0;
+}
+
+/* ==========================================================================
+   2. Шапка
+   ========================================================================== */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #000;
+  border-bottom: 3px solid #0b5180;
+  box-shadow: 0 4px 16px rgba(11, 81, 128, 0.45);
+}
+
+header.scrolled {
+  box-shadow: 0 6px 22px rgba(11, 81, 128, 0.6);
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  height: 64px;
+}
+
+.logo-wrap {
+  position: relative;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+.logo,
+.logo:hover {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #0c6eaa;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.logo:hover {
+  color: #ffffff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-actions .btn-link {
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.cinema-popup {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  min-width: 280px;
+  background: #0d0d0d;
+  border: 1px solid #0b5180;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 8px 28px rgba(11, 81, 128, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 300;
+}
+
+.cinema-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cinema-popup p {
+  color: #ffffff;
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+.cinema-popup span {
+  color: #0c6eaa;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-right: 4px;
+}
+
+.burger {
+  display: block;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 200;
+  flex-shrink: 0;
+}
+
+.burger span {
+  position: absolute;
+  left: 10px;
+  width: 24px;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: transform 0.35s ease, opacity 0.2s ease, top 0.35s ease;
+}
+
+.burger span:nth-child(1) { top: 14px; }
+.burger span:nth-child(2) { top: 21px; }
+.burger span:nth-child(3) { top: 28px; }
+
+.burger.active span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+/* ==========================================================================
+   3. Меню 
+   ========================================================================== */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+nav.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+nav li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+nav.open li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+nav.open li:nth-child(1) { transition-delay: 0.15s; }
+nav.open li:nth-child(2) { transition-delay: 0.23s; }
+nav.open li:nth-child(3) { transition-delay: 0.31s; }
+nav.open li:nth-child(4) { transition-delay: 0.39s; }
+nav.open li:nth-child(5) { transition-delay: 0.47s; }
+nav.open li:nth-child(6) { transition-delay: 0.55s; }
+nav.open li:nth-child(7) { transition-delay: 0.63s; }
+nav.open li:nth-child(8) { transition-delay: 0.71s; }
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.5rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: #0c6eaa;
+}
+
+/* ==========================================================================
+   4. Основний
+   ========================================================================== */
+
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.site-footer {
+  background: #000;
+  border-top: 1px solid #0b5180;
+  padding: 30px 20px 16px;
+  color: #9ca3af;
+}
+
+.footer-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.footer-grid h4 {
+  color: #0c6eaa;
+  margin-bottom: 6px;
+}
+
+.footer-grid p {
+  line-height: 1.5;
+}
+
+.footer-copy {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   5. Головна
+   ========================================================================== */
+
+.banner {
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(11, 81, 128, 0.7) 100%),
+                    url("../images/hall.jpg");
+  background-size: cover;
+  background-position: center;
+  background-color: #000;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #0b5180;
+  animation: fadeUp 0.8s ease both;
+}
+
+.banner h1 {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.85), rgba(11, 81, 128, 0.85));
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #ffffff;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+
+.banner p {
+  animation: fadeUp 0.8s 0.25s ease both;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.hero-actions .btn-link {
+  animation: fadeUp 0.6s 0.35s ease both;
+}
+
+.section-title {
+  text-align: center;
+  color: #0c6eaa;
+  font-size: 1.6rem;
+  margin: 50px 0 24px;
+}
+
+.stats {
+  max-width: 800px;
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  text-align: center;
+}
+
+.stat {
+  padding: 20px;
+  border-top: 2px solid #0b5180;
+}
+
+.counter {
+  display: block;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat small {
+  color: #9ca3af;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.feature-card {
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 4px 18px rgba(11, 81, 128, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 81, 128, 0.45);
+}
+
+.feature-card h3 {
+  color: #0c6eaa;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.step {
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 22px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 81, 128, 0.45);
+}
+
+.step span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b5180 0%, #0c6eaa 100%);
+  color: #ffffff;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.step h3 {
+  color: #0c6eaa;
+  margin-bottom: 8px;
+}
+
+.step p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.promo {
+  background: linear-gradient(135deg, #053150 0%, #000 100%);
+  border: 1px solid #0b5180;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(11, 81, 128, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.promo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 81, 128, 0.45);
+}
+
+.promo.promo-left {
+  background: linear-gradient(90deg, #000 0%, #053150 100%);
+}
+
+.promo h3 {
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.promo p {
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+
+.cta {
+  text-align: center;
+  background: linear-gradient(180deg, #000000 0%, #053150 100%);
+  border: 1px solid #0b5180;
+  border-radius: 16px;
+  padding: 30px;
+  margin-top: 50px;
+}
+
+.cta h2 {
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.cta p {
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   6. Фільми
+   ========================================================================== */
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-form input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  position: relative;
+  background: linear-gradient(180deg, #0d0d0d 0%, #000 100%);
+  border: 1px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 18px rgba(11, 81, 128, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 81, 128, 0.45);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.movie-card .price {
+  color: #0c6eaa;
+  font-weight: bold;
+}
+
+.card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.poster {
+  position: relative;
+}
+
+.poster-clickable {
+  cursor: pointer;
+}
+
+.movie-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background: #0d0d0d;
+  border: 1px solid #0b5180;
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 28px rgba(11, 81, 128, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 300;
+}
+
+.movie-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.movie-popup h4 {
+  color: #0c6eaa;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.movie-popup p {
+  color: #ffffff;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.message {
+  font-size: 1.1rem;
+  color: #9ca3af;
+}
+
+.errors {
+  background: linear-gradient(90deg, #0d0d0d 0%, #000 100%);
+  border: 1px solid #0b5180;
+  padding: 12px 20px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   7. Форми
+   ========================================================================== */
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 500px;
+}
+
+.add-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-form textarea {
+  min-height: 100px;
+}
+
+.add-form button {
+  align-self: flex-start;
+}
+
+/* ==========================================================================
+   8. Бронювання: схема 
+   ========================================================================== */
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.session-fields,
+.contact-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.session-fields label,
+.contact-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 180px;
+  color: #9ca3af;
+}
+
+.screen-wrap {
+  text-align: center;
+}
+
+.screen {
+  display: inline-block;
+  width: 70%;
+  padding: 8px;
+  color: #0c6eaa;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  border-top: 3px solid #0b5180;
+  background: linear-gradient(to bottom, rgba(11, 81, 128, 0.35), transparent);
+  border-radius: 0 0 50% 50% / 0 0 20px 20px;
+}
+
+.seat-map {
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  min-width: fit-content;
+}
+
+.row-label {
+  width: 20px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.seat,
+.seat:hover {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #0b5180;
+  background: #0d0d0d;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seat:hover {
+  background: #0b5180;
+  transform: scale(1.1);
+}
+
+.seat.comfort {
+  border-color: #0c6eaa;
+}
+
+.seat.vip {
+  border-color: #38bdf8;
+}
+
+.seat.selected,
+.seat.selected:hover {
+  background: #0c6eaa;
+  border-color: #0c6eaa;
+  color: #000000;
+  animation: seatPop 0.25s ease;
+}
+
+.seat.taken,
+.seat.taken:hover {
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+  color: #555555;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.legend .seat {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+  cursor: default;
+  transform: none;
+}
+
+.summary-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 12px;
+  box-shadow: 0 -6px 20px rgba(11, 81, 128, 0.3);
+}
+
+.summary-bar strong {
+  color: #0c6eaa;
+}
+
+.summary-bar button {
+  font-size: 1.05rem;
+  padding: 12px 24px;
+}
+
+.summary-bar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================================
+   9. Галерея
+   ========================================================================== */
+
+.gallery-page {
+  padding: 20px 0;
+}
+
+.gallery-title {
+  text-align: center;
+  color: #0c6eaa;
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.gallery-lead {
+  text-align: center;
+  color: #9ca3af;
+  max-width: 640px;
+  margin: 0 auto 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.gallery-card {
+  margin: 0;
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(11, 81, 128, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 81, 128, 0.45);
+}
+
+.gallery-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.gallery-card figcaption {
+  padding: 12px 14px;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   10. Таблиця 
+   ========================================================================== */
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #1c1c1c;
+  border-radius: 12px;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: #0d0d0d;
+}
+
+.bookings-table th,
+.bookings-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #1c1c1c;
+  white-space: nowrap;
+}
+
+.bookings-table th {
+  color: #0c6eaa;
+  background: #000;
+  font-weight: 700;
+}
+
+.bookings-table tr:hover td {
+  background: rgba(11, 81, 128, 0.15);
+}
+
+.small-note {
+  font-size: 0.9rem;
+  margin-top: -8px;
+}
+
+/* ==========================================================================
+   11. Про нас
+   ========================================================================== */
+
+.about-text {
+  color: #9ca3af;
+  max-width: 760px;
+  margin: 0 auto 16px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.contacts-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contacts-list li {
+  margin-bottom: 10px;
+}
+
+.contacts-page .gallery-title,
+.contacts-page .section-title,
+.contacts-page .about-text {
+  text-align: left;
+}
+
+.contacts-page .section-title {
+  margin: 30px 0 12px;
+}
+
+.contacts-page .about-text {
+  margin: 0 0 16px;
+  max-width: 100%;
+}
+
+.contacts-page .contacts-list li {
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   12. Анімації
+   ========================================================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes logoGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.9));
+  }
+}
+
+@keyframes seatPop {
+  0% {
+    transform: scale(0.8);
+  }
+  70% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.no-anim *,
+.no-anim *::before,
+.no-anim *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.no-anim .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   13. налаштувань
+   ========================================================================== */
+
+.settings {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 16px;
+  padding: 20px 22px;
+  cursor: pointer;
+}
+
+.toggle-row strong {
+  display: block;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.toggle-row small {
+  color: #9ca3af;
+}
+
+.toggle-row input[type="checkbox"] {
+  appearance: none;
+  width: 50px;
+  height: 28px;
+  padding: 0;
+  flex-shrink: 0;
+  background: #1c1c1c;
+  border: 1px solid #0b5180;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggle-row input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0c6eaa;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.toggle-row input[type="checkbox"]:checked {
+  background: #0b5180;
+}
+
+.toggle-row input[type="checkbox"]:checked::after {
+  transform: translateX(22px);
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   14. Адаптив 
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .movie-list {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-form input {
+    min-width: 100%;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-actions .btn-link {
+    font-size: 0.85rem;
+    padding: 5px 8px;
+  }
+
+  .banner h1 {
+    font-size: 1.4rem;
+  }
+}
+
+/* ==========================================================================
+   15. Вимкнення анімацій 
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
