@@ -103,7 +103,7 @@ def read_movie_form():
 @app.route("/")
 def index():
     conn = get_db()
-    featured = conn.execute("SELECT * FROM movies ORDER BY id DESC LIMIT 3").fetchall()
+    featured = conn.execute("SELECT * FROM movies ORDER BY id DESC LIMIT 4").fetchall()
     movies_count = conn.execute("SELECT COUNT(*) FROM movies").fetchone()[0]
     seat_rows = conn.execute("SELECT seats FROM bookings").fetchall()
     conn.close()
